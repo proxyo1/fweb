@@ -103,7 +103,11 @@ return(
                 className="form-control"
                 id="name"
                 value={form.name}
-                onChange={(e) => updateForm({name: e.target.value})}
+                onChange={(e) => {
+                  // Allow only alphabetical characters
+                  const alphabeticValue = e.target.value.replace(/[^a-zA-Z\s]/g, ''); // Remove non-alphabetic characters
+                  updateForm({ name: alphabeticValue });
+                }}
                 />
             </div>
             <div className="form-group">
@@ -113,10 +117,9 @@ return(
         className="form-control"
         id="number"
         value={form.number}
-        onChange={(e) => {
-            // Allow only numeric input
-            const numericValue = e.target.value.replace(/\D/g, ''); // Remove non-numeric characters
-            updateForm({ number: numericValue });
+        onChange={(e) => {     
+          const numericValue = e.target.value.replace(/\D/g, '').slice(0, 8); // Remove non-numeric characters and limit to 8 characters
+          updateForm({ number: numericValue });
         }}
     />
 </div>
@@ -127,7 +130,11 @@ return(
                 className="form-control"
                 id="admin_no"
                 value={form.admin_no}
-                onChange={(e) => updateForm({admin_no: e.target.value.toUpperCase()})}
+                onChange={(e) => {
+                  // Limit the length and enforce the format
+                  const formattedAdminNo = e.target.value.slice(0, 8).toUpperCase(); // Limit to 8 characters and convert to uppercase
+                  updateForm({ admin_no: formattedAdminNo });
+                }}
                 />
             </div>
             <div>

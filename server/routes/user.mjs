@@ -67,23 +67,26 @@ router.patch("/:id", async (req, res) => {
       },
     };
     let collection = await db.collection("users");
-    let result = await collection.updateOne(query, updates);
+    let result;
+
+    try {
+      result = await collection.updateOne(query, updates);
+    } catch (error) {
+      if (error.code === 11000) {
+        // Duplicate key violation
+        const duplicateKey = Object.keys(error.keyValue)[0];
+        return res.status(409).send(`'${error.keyValue[duplicateKey]}' is already used.`);
+      } else {
+        // Other errors
+        console.error("Error updating document:", error);
+        return res.status(500).send("Internal Server Error");
+      }
+    }
+
     res.send(result).status(200);
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: 'Internal server error' });
-  }
-});
-
-router.delete("/:id", async (req, res) => {
-  try {
-    const query = { _id: new ObjectId(req.params.id) };
-    const collection = db.collection("users");
-    let result = await collection.deleteOne(query);
-    res.send(result).status(200);
-  } catch (error) {
-    console.error("Error in DELETE /users/:id:", error);
-    res.status(500).send("Internal Server Error");
   }
 });
 
