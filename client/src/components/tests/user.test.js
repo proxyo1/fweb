@@ -1,42 +1,32 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
-import { MemoryRouter } from 'react-router-dom';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom'
+
 import UserList from '../userList';
+const mockUser = {
+  _id: '123',
+  name: 'John Doe',
+  number: '1234567890',
+  admin_no: '1001',
+};
 
-// Mock the fetch function
-jest.mock('node-fetch');
-
-test('renders user list with mock data', async () => {
-  // Mock data for testing
-  const mockUsers = [
-    {
-      _id: '1',
-      name: 'Test User',
-      number: '123456',
-      admin_no: 'A12345',
-    },
-  ];
-
-  // Mock the fetch function to resolve with the mock data
-  global.fetch = jest.fn(() =>
-    Promise.resolve({
-      json: () => Promise.resolve(mockUsers),
-    })
-  );
-
-  render(
-    <MemoryRouter>
-      <UserList />
-    </MemoryRouter>
-  );
-
-  // Wait for the data to be loaded
-  await waitFor(() => screen.getByText('Test User'),{timeout: 2000});
-
-  // Check if the user is rendered
-  expect(screen.getByText('Test User')).toBeInTheDocument();
-  expect(screen.getByText('123456')).toBeInTheDocument();
-  expect(screen.getByText('A12345')).toBeInTheDocument();
+test('renders UserList component without errors', () => {
+  render(<UserList />);
+  const headerElement = screen.getByText(/User List/i);
+  expect(headerElement).toBeInTheDocument();
 });
 
+test('renders UserList component with a user', () => {
+  // Render the component with mocked users data
+  render(<UserList users={[mockUser]} />);
+
+  // Check for the presence of the specific user data
+  const userRow = screen.getByText(/John Doe/i);
+  const userNumber = screen.getByText(/1234567890/i);
+  const userAdminNo = screen.getByText(/1001/i);
+
+  // Ensure all user elements are rendered
+  expect(userRow).toBeInTheDocument();
+  expect(userNumber).toBeInTheDocument();
+  expect(userAdminNo).toBeInTheDocument();
+});
