@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
@@ -74,8 +74,8 @@ const UserList = () => {
 
   return (
     <div className="user-list-container">
-      <h3>User List</h3>
-      <ToastContainer />
+      <h3>Member List</h3>
+
       <table className="table table-bordered table-hover">
         <thead className="thead-dark">
           <tr>

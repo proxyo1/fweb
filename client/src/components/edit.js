@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from "react";
 import { useParams,useNavigate } from "react-router";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Edit(){
@@ -101,7 +101,7 @@ export default function Edit(){
         toast.error(message, {
           position: "top-right",
           autoClose: 5000, // 5 seconds
-          hideProgressBar: true,
+          hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
@@ -113,7 +113,7 @@ export default function Edit(){
         toast.success(message, {
           position: "top-right",
           autoClose: 5000, // 5 seconds
-          hideProgressBar: true,
+          hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
@@ -124,7 +124,7 @@ export default function Edit(){
     return(
         <div>
             <h3>Update User</h3>
-            <ToastContainer />
+
             <form onSubmit={onSubmit}>
             <div className="form-group">
                 <label htmlFor="name">Name</label>
@@ -141,7 +141,7 @@ export default function Edit(){
                 />
             </div>
             <div className="form-group">
-                <label htmlFor="position">Phone Number</label>
+                <label htmlFor="number">Phone Number</label>
                 <input
                 type="tel"
                 className="form-control"
@@ -154,7 +154,7 @@ export default function Edit(){
                 />
             </div>
             <div className="form-group">
-                <label htmlFor="position">Admin Number</label>
+                <label htmlFor="admin_no">Admin Number</label>
                 <input
                 type="text"
                 className="form-control"
