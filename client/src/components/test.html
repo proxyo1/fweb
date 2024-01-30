@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TP Falcons - Track and Field</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<style>
+  /* Ensure font-family is consistent */
+  body {
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  /* Custom styles for the wave shape */
+  .wave-shape {
+    clip-path: polygon(0 0, 100% 0, 100% 55%, 0 100%);
+  }
+
+  /* Custom styles for the navigation */
+  .nav-link:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body class="bg-white text-gray-800">
+<div class="min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-white px-4 py-3 shadow-md">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <a href="#" class="flex items-center">
+        <img src="https://placehold.co/100x50" alt="Temasek Polytechnic logo" class="mr-3">
+        <span class="font-bold text-xl">Temasek Polytechnic</span>
+      </a>
+      <nav>
+        <ul class="flex space-x-4">
+          <li><a href="#" class="nav-link text-red-600 font-semibold">Information</a></li>
+          <li><a href="#" class="nav-link text-red-600 font-semibold">Join Us</a></li>
+          <li><a href="#" class="nav-link text-red-600 font-semibold">Login</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow">
+    <div class="max-w-7xl mx-auto px-4 py-12">
+      <div class="grid grid-cols-2 gap-6 items-center">
+        <!-- Text Section -->
+        <div>
+          <p class="text-gray-500 text-sm uppercase">Track and Field</p>
+          <h1 class="font-bold text-6xl my-2">TP FALCONS</h1>
+          <p class="text-xl">RUN. JUMP. THROW.</p>
+        </div>
+        <!-- Image Slider -->
+        <div>
+          <div class="relative">
+            <img src="https://placehold.co/500x300" alt="Group photo of TP Falcons athletics team in front of the Home of Athletics building" class="rounded shadow-lg">
+            <!-- Slider Arrows -->
+            <button class="absolute top-1/2 left-2 -translate-y-1/2 bg-white p-1 rounded-full shadow-lg">
+              <i class="fas fa-chevron-left text-gray-800"></i>
+            </button>
+            <button class="absolute top-1/2 right-2 -translate-y-1/2 bg-white p-1 rounded-full shadow-lg">
+              <i class="fas fa-chevron-right text-gray-800"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Wave Shape -->
+    <div class="wave-shape bg-red-600 h-24 md:h-32 lg:h-40"></div>
+  </main>
+  
+</div>
+</body>
+</html>

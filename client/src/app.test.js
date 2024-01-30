@@ -46,5 +46,6 @@ test("navigates to Create component when 'Create User' link is clicked", async (
   });
 });
 
-// Add more tests based on the interactions and UI elements in your application
+
+// Add more tests based on the interactions and UI elements in your application.
 // For example, you can test the rendering of Edit component, deleting a user, etc.
