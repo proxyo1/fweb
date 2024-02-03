@@ -52,8 +52,28 @@ router.delete("/:id", async(req,res) =>{
 
     const collection = db.collection("records");
     let result = await collection.deleteOne(query);
-
+m
     res.send(result).status(200)
 })
 
+router.post("/login", async (req, res) => {
+    const { name, password } = req.body;
+  
+    // Check if the email exists in your records collection
+    const collection = await db.collection("records");
+    const user = await collection.findOne({ name });
+  
+    if (!user) {
+      res.status(401).json({ message: "Invalid name or password" });
+      return;
+    }
+  
+    // You should implement proper password hashing and validation here
+    // For simplicity, I'm assuming plaintext password matching.
+    if (user.password === password) {
+      res.status(200).json({ message: "Login successful" });
+    } else {
+      res.status(401).json({ message: "Invalid email or password" });
+    }
+  });
 export default router
