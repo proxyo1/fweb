@@ -87,7 +87,7 @@ const ManageAnnouncementsPage = () => {
                                 </div>
 
                                 <div className="flex flex-col items-end">
-                                    <Link to={`/editannouncement/${announcement._id}`} className="text-xs font-semibold text-red-500 hover:text-red-700">Edit</Link>
+                                    <Link to={`/admin/editannouncement/${announcement._id}`} className="text-xs font-semibold text-red-500 hover:text-red-700">Edit</Link>
                                     <button onClick={() => deleteAnnouncement(announcement._id)} className="text-xs font-semibold text-red-500 hover:text-red-700 mt-2">Delete</button>
                                 </div>
                             </div>

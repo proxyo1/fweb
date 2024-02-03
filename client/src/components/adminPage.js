@@ -52,7 +52,7 @@ const AdminPage = () => {
     <Sidebar/>
       {/* Main content */}
       <div className="flex-1 p-10">
-        <h2 className="text-4xl font-bold mb-10">Admin Page</h2>
+        <h2 className="text-4xl font-bold mb-10">Members List</h2>
         <div className="relative mb-6">
           <input
             type="text"
@@ -76,7 +76,7 @@ const AdminPage = () => {
                 <p>{user.admin_no}</p>
               </div>
               <div className="flex space-x-2">
-                <Link to={`/edit/${user._id}`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <Link to={`/admin/edit/${user._id}`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                   Edit
                 </Link>
                 <button

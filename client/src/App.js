@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Route,Routes } from "react-router-dom";
 
 import Create from "./components/create";
@@ -21,32 +20,26 @@ import EditAnnouncementPage from "./components/EditAnnouncementPage";
 import ApplicationsPage from "./components/applications";
 
 
-
-
 const App = () => {
   return (
     <div>
       <ToastContainer />
-
       <Navbar />
       <Routes>
-      <Route exact path="/" element={<HomePage />}/> {/* Set HomePage as the main page */}
+        <Route exact path="/" element={<HomePage />} />
+        <Route path="/join" element={<JoinUsPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/announcements" element={<AnnouncementsPage />} />
 
-      <Route path ="/create" element={<Create />}/>
-      <Route path ="/edit/:id" element={<Edit />}/>
-      <Route path ="/editannouncement/:id" element={<EditAnnouncementPage />}/>
-
-      <Route path="/join" element={<JoinUsPage />}/>
-      <Route path="/admin" element={<ProtectedRoute>
-              <AdminPage />
-            </ProtectedRoute>}/>
-      <Route path="/login" element={<Login />}/>
-      <Route path="/announcements" element={<AnnouncementsPage />}/>
-      <Route path="/admin/manageannouncement" element={<ManageAnnouncementsPage />}/>
-      <Route path="/admin/applications" element={<ApplicationsPage />}/>
-      
+        {/* Wrap protected routes with ProtectedRoute component */}
+        <Route path="/admin/create" element={<ProtectedRoute><Create /></ProtectedRoute>} />
+        <Route path="/admin/edit/:id" element={<ProtectedRoute><Edit /></ProtectedRoute>} />
+        <Route path="/admin/editannouncement/:id" element={<ProtectedRoute><EditAnnouncementPage /></ProtectedRoute>} />
+        <Route path="/admin" element={<ProtectedRoute><AdminPage /></ProtectedRoute>} />
+        <Route path="/announcements" element={<ProtectedRoute><AnnouncementsPage /></ProtectedRoute>} />
+        <Route path="/admin/manageannouncement" element={<ProtectedRoute><ManageAnnouncementsPage /></ProtectedRoute>} />
+        <Route path="/admin/applications" element={<ProtectedRoute><ApplicationsPage /></ProtectedRoute>} />
       </Routes>
-   
     </div>
   )
 }
