@@ -15,19 +15,21 @@ const SliderComponent = () => {
     autoplay: true,
     autoplaySpeed: 3000,
     pauseOnHover: true
+    
+    
   };
 
   return (
     <div className="relative">
       <Slider {...settings}>
         <div>
-          <img src="https://placehold.co/500x300" alt="Group photo of TP Falcons athletics team in front of the Home of Athletics building" className="rounded shadow-lg" />
+          <img src=".\images\1.png" alt="Group photo of TP Falcons athletics team in front of the Home of Athletics building" className="w-full h-full object-cover object-center" />
         </div>
         <div>
-          <img src="https://placehold.co/500x300" alt="Group photo of TP Falcons athletics team in front of the Home of Athletics building" className="rounded shadow-lg" />
+          <img src=".\images\2.png" alt="Group photo of TP Falcons athletics team in front of the Home of Athletics building" className="w-full h-full object-cover object-center" />
         </div>
         <div>
-          <img src="https://placehold.co/500x300" alt="Group photo of TP Falcons athletics team in front of the Home of Athletics building" className="rounded shadow-lg" />
+          <img src=".\images\3.png" alt="Group photo of TP Falcons athletics team in front of the Home of Athletics building" className="w-full h-full object-cover object-center" />
         </div>
         {/* Repeat the div for as many slides as you have */}
       </Slider>

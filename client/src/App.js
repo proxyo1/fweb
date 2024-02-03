@@ -7,11 +7,14 @@ import Edit from "./components/edit";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import HomePage from "./components/homePage";
-import "./HomePage.css"
+import "./components/css/HomePage.css"
 
 
 import Navbar from "./components/navbar";
 import AdminPage from "./components/adminPage";
+import Login from "./components/loginPage";
+import ProtectedRoute from "./components/ProtectedRoute";
+
 
 
 
@@ -19,6 +22,7 @@ const App = () => {
   return (
     <div>
       <ToastContainer />
+
       <Navbar />
       <Routes>
       <Route exact path="/" element={<HomePage />}/> {/* Set HomePage as the main page */}
@@ -26,8 +30,12 @@ const App = () => {
       <Route path ="/create" element={<Create />}/>
       <Route path ="/edit/:id" element={<Edit />}/>
       <Route path="/users" element={<UserList />}/>
-      <Route path="/admin" element={<AdminPage />}/>
+      <Route path="/admin" element={<ProtectedRoute>
+              <AdminPage />
+            </ProtectedRoute>}/>
+      <Route path="/login" element={<Login />}/>
       </Routes>
+   
     </div>
   )
 }
