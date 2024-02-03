@@ -1,6 +1,8 @@
 import express from "express"
 import db from "../db/conn.mjs"
 import { ObjectId } from "mongodb"
+import speakeasy from "speakeasy"
+import QRCode from "qrcode"
 
 const router = express.Router();
 
@@ -20,16 +22,28 @@ router.get("/:id", async (req,res) =>{
 
 })
 
-router.post("/",async (req,res) =>{
+router.post("/", async (req, res) => {
+    // Generate a unique secret for 2FA
+    const secret = speakeasy.generateSecret({length: 20});
     let newDocument = {
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password
-    }
-    let collection = await db.collection("records")
+        password: req.body.password,
+        twoFactorSecret: secret.base32 // Store the secret in your DB
+    };
+
+    let collection = await db.collection("records");
     let result = await collection.insertOne(newDocument);
-    res.send(result).status(204);
-})
+
+    // Generate a QR code that user can scan with a 2FA app
+    QRCode.toDataURL(secret.otpauth_url, (err, data_url) => {
+        // Send QR code and success status
+        res.json({
+            result: result,
+            qrCode: data_url
+        }).status(200); // Changed status code to 200 for successful operation
+    });
+});
 
 router.patch("/:id",async (req,res)=> {
     const query = { _id: new ObjectId(req.params.id)}
@@ -52,28 +66,34 @@ router.delete("/:id", async(req,res) =>{
 
     const collection = db.collection("records");
     let result = await collection.deleteOne(query);
-m
+
     res.send(result).status(200)
 })
 
-router.post("/login", async (req, res) => {
-    const { name, password } = req.body;
-  
-    // Check if the email exists in your records collection
+router.post('/:_id/verify', async (req, res) => {
+    const { token } = req.body;
+    const { _id } = req.params;
+    
     const collection = await db.collection("records");
-    const user = await collection.findOne({ name });
-  
+    const user = await collection.findOne({ _id: new ObjectId(_id) });
+    console.log(user)
+    
     if (!user) {
-      res.status(401).json({ message: "Invalid name or password" });
-      return;
+        return res.status(404).send('User not found');
     }
-  
-    // You should implement proper password hashing and validation here
-    // For simplicity, I'm assuming plaintext password matching.
-    if (user.password === password) {
-      res.status(200).json({ message: "Login successful" });
+    
+    // Verify the token
+    const verified = speakeasy.totp.verify({
+        secret: user.twoFactorSecret,
+        encoding: 'base32',
+        token: token,
+    });
+    
+    if (verified) {
+        // Optionally update the user's document to indicate 2FA is setup successfully
+        res.send({ verified: true });
     } else {
-      res.status(401).json({ message: "Invalid email or password" });
+        res.status(400).send({ verified: false, message: "Invalid token" });
     }
-  });
+});
 export default router
