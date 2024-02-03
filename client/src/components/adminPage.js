@@ -67,7 +67,7 @@ const AdminPage = () => {
             <div key={user._id} className="flex items-center py-3 border-b border-gray-200">
               <img
                 className="w-16 h-16 rounded-full mr-4"
-                src="https://placehold.co/100" // Placeholder image source
+                src={user.image || "https://placehold.co/100"} 
                 alt={`Avatar of ${user.name}`}
               />
               <div className="flex-grow">

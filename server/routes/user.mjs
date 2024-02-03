@@ -35,6 +35,7 @@ router.post("/", async (req, res) => {
       name: req.body.name,
       number: req.body.number,
       admin_no: req.body.admin_no,
+      image: req.body.image
     };
 
     let collection = await db.collection("users");
@@ -64,6 +65,7 @@ router.patch("/:id", async (req, res) => {
         name: req.body.name,
         number: req.body.number,
         admin_no: req.body.admin_no,
+        image: req.body.image
       },
     };
     let collection = await db.collection("users");

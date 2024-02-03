@@ -8,9 +8,11 @@ export default function Create() {
   const [form, setForm] = useState({
     name: "",
     number: "",
-    admin_no: ""
+    admin_no: "",
+    image:""
   });
   const navigate = useNavigate();
+  const [imagePreview, setImagePreview] = useState(null);
 
   function updateForm(value) {
     setForm((prev) => {
@@ -57,7 +59,7 @@ export default function Create() {
       }
 
       // clear form inputs
-      setForm({ name: "", number: "", admin_no: "" });
+      setForm({ name: "", number: "", admin_no: "" ,image:""});
       showSuccess("User successfully created!");
       // navigate back to the root page
       navigate("/");
@@ -89,68 +91,105 @@ export default function Create() {
       progress: undefined
     });
   };
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setImagePreview(reader.result);
+        // Keep the entire result, including the Data URL scheme
+        const base64String = event.target.result;
+        updateForm({ image: base64String });
+      };
+      reader.readAsDataURL(file);
+    }
+};
 
-return(
-    <div>
-        <h3>Create New User</h3>
+  
 
+
+return (
+  
+  <div className="flex items-center justify-center p-12">
+  <div className="mx-auto w-full max-w-md">
+    <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">Add Member</h2>
+    <form onSubmit={onSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      {/* Image upload input and preview */}
+      <div className="flex flex-col items-center mb-4">
+        <label htmlFor="upload-button" className="cursor-pointer">
+          {/* Display image preview or default icon */}
+          {imagePreview ? (
+            <img src={imagePreview} alt="Profile preview" className="h-24 w-24 rounded-full object-cover" />
+          ) : (
+            <div className="rounded-full border border-gray-300 w-24 h-24 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path d="M4 5h16a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v4m2-2H10" />
+    </svg>
+            </div>
+          )}
+          <input
+            id="upload-button"
+            type="file"
+            className="hidden"
+            accept="image/*"
+            onChange={handleImageUpload}
+          />
+        </label>
+      </div>
         
-        
-        <form onSubmit={onSubmit}>
-            <div className="form-group">
-                <label htmlFor="name">Name</label>
-                <input
-                type="text"
-                className="form-control"
-                id="name"
-                value={form.name}
-                onChange={(e) => {
-                  // Allow only alphabetical characters
-                  const alphabeticValue = e.target.value.replace(/[^a-zA-Z\s]/g, ''); // Remove non-alphabetic characters
-                  updateForm({ name: alphabeticValue });
-                }}
-                />
-            </div>
-            <div className="form-group">
-    <label htmlFor="number">Phone Number</label>
-    <input
-        type="tel"
-        className="form-control"
-        id="number"
-        value={form.number}
-        onChange={(e) => {     
-          const numericValue = e.target.value.replace(/\D/g, '').slice(0, 8); // Remove non-numeric characters and limit to 8 characters
-          updateForm({ number: numericValue });
-        }}
-    />
-</div>
-            <div className="form-group">
-                <label htmlFor="admin_no">Admin Number</label>
-                <input
-                type="text"
-                className="form-control"
-                id="admin_no"
-                value={form.admin_no}
-                onChange={(e) => {
-                  // Limit the length and enforce the format
-                  const formattedAdminNo = e.target.value.slice(0, 8).toUpperCase(); // Limit to 8 characters and convert to uppercase
-                  updateForm({ admin_no: formattedAdminNo });
-                }}
-                />
-            </div>
-            <div>
-                <div className="form-group">
-                    <input
-                    type="submit"
-                    value="Create User"
-                    className="btn btn-primary">
+        <div className="mb-6">
+          <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">Name</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            required
+            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+            placeholder=""
+            value={form.name}
+            onChange={(e) => updateForm({ name: e.target.value.replace(/[^a-zA-Z\s]/g, '') })}
+          />
+        </div>
 
-                    </input>
-                </div>
-            </div>
-        </form>
+        <div className="mb-6">
+          <label htmlFor="number" className="block mb-2 text-sm font-medium text-gray-900">Phone Number</label>
+          <input
+            type="tel"
+            name="number"
+            id="number"
+            required
+            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+            placeholder=""
+            value={form.number}
+            onChange={(e) => updateForm({ number: e.target.value.replace(/\D/g, '').slice(0, 8) })}
+          />
+        </div>
+
+        <div className="mb-6">
+          <label htmlFor="admin_no" className="block mb-2 text-sm font-medium text-gray-900">Admin Number</label>
+          <input
+            type="text"
+            name="admin_no"
+            id="admin_no"
+            required
+            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"
+            placeholder=""
+            value={form.admin_no}
+            onChange={(e) => updateForm({ admin_no: e.target.value.slice(0, 8).toUpperCase() })}
+          />
+        </div>
+
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            className="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-10 py-2.5 text-center"
+          >
+            Create
+          </button>
+        </div>
+      </form>
     </div>
-)
-
+  </div>
+);
 }
-
