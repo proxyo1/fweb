@@ -1,6 +1,9 @@
 import express from "express";
 import db from "../db/conn.mjs";
 import { ObjectId } from "mongodb";
+import { cookieJwtAuth } from '../middleware/auth.mjs';
+
+
 
 const router = express.Router();
 
@@ -30,7 +33,7 @@ router.post("/", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }}
 });
-router.delete("/:id", async (req, res) => {
+router.delete("/:id",cookieJwtAuth, async (req, res) => {
   try {
     const { id } = req.params; // Extract the id from the request parameters
     if (!ObjectId.isValid(id)) {

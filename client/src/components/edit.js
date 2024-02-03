@@ -16,7 +16,10 @@ export default function Edit() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`http://localhost:5050/user/${params.id}`);
+      const response = await fetch(`http://localhost:5050/user/${params.id}`);{
+        
+      }
+     
       if (!response.ok) {
         const message = `An error has occurred: ${response.statusText}`;
         window.alert(message);
@@ -87,6 +90,7 @@ export default function Edit() {
         headers: {
           "Content-Type": "application/json"
         },
+        credentials: 'include',
         body: JSON.stringify(form)
       });
 

@@ -24,13 +24,18 @@ const ApplicationsPage = () => {
         try {
             const response = await fetch(`http://localhost:5050/application/${id}`, { // Adjust this URL to your server's endpoint
                 method: 'DELETE',
+                credentials: 'include',
             });
             if (response.ok) {
                 toast.success("Application successfully deleted!");
-                // Remove the deleted application from the state
                 setApplications(applications.filter(app => app._id !== id));
+            } else if (response.status === 401) {
+                toast.error("Bad Token, Please login again");
             } else {
-                console.error('Failed to delete the application with id:', id);
+                // It's a good practice to log the actual error message from the response if possible
+                response.text().then(errorMessage => {
+                    console.error('Failed to delete the application with id:', id, 'Error message:', errorMessage);
+                });
             }
         } catch (error) {
             console.error('Error deleting application:', error);

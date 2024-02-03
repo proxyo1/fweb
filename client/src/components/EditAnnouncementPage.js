@@ -50,8 +50,11 @@ export default function EditAnnouncement() {
     try {
       const response = await fetch(`http://localhost:5050/announcements/${id}`, {
         method: "PATCH",
+        credentials: "include",
+
         headers: {
           "Content-Type": "application/json"
+          
         },
         body: JSON.stringify(form)
       });
@@ -62,7 +65,7 @@ export default function EditAnnouncement() {
       }
 
       toast.success("Announcement successfully updated!");
-      navigate("/manageannouncement");
+      navigate("/admin/manageannouncement");
     } catch (error) {
       toast.error(`Update failed: ${error.message}`);
     }

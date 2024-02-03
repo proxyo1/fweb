@@ -47,16 +47,17 @@ const Login = () => {
         } else if (loginStage === 2) {
             // Submit 2FA token for verification
             try {
-                const response = await fetch('http://localhost:5050/login/2fa', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        name: credentials.name, // Include name for identifying user session
-                        token: credentials.token,
-                    }),
-                });
+              const response = await fetch('http://localhost:5050/login/2fa', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include', // Needed to include cookies in the request
+                body: JSON.stringify({
+                    name: credentials.name, // Include name for identifying user session
+                    token: credentials.token,
+                }),
+            });
 
                 if (response.ok) {
                     const userData = await response.json();

@@ -1,11 +1,12 @@
 import express from "express";
 import db from "../db/conn.mjs";
 import { ObjectId } from "mongodb";
+import { cookieJwtAuth } from "../middleware/auth.mjs";
 
 const router = express.Router();
 
 // Create an announcement
-router.post("/", async (req, res) => {
+router.post("/",cookieJwtAuth, async (req, res) => {
   try {
     // Get current date and format it as YY-MM-DD
     const currentDate = new Date();
@@ -58,7 +59,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Update an announcement
-router.patch("/:id", async (req, res) => {
+router.patch("/:id",cookieJwtAuth, async (req, res) => {
   try {
     const query = { _id: new ObjectId(req.params.id) };
     const currentDate = new Date();
@@ -87,7 +88,7 @@ router.patch("/:id", async (req, res) => {
 
 
 // Delete an announcement
-router.delete("/:id", async (req, res) => {
+router.delete("/:id",cookieJwtAuth, async (req, res) => {
   try {
     const query = { _id: new ObjectId(req.params.id) };
     const collection = await db.collection("announcements");
