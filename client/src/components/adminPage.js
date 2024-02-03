@@ -30,17 +30,26 @@ const AdminPage = () => {
   const deleteUser = async (id) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       try {
-        await fetch(`http://localhost:5050/user/${id}`, {
+        const response = await fetch(`http://localhost:5050/user/${id}`, {
           method: 'DELETE',
+          credentials: 'include',
         });
-        setUsers(users.filter((user) => user._id !== id));
-        toast.success('User deleted successfully!');
+        if (response.ok) {
+          setUsers(users.filter((user) => user._id !== id));
+          toast.success('User deleted successfully!');
+        } else {
+          // Handle HTTP error status codes
+          const errorMessage = await response.text();
+          toast.error(errorMessage);
+        }
       } catch (error) {
-        console.error('Delete error:', error);
-        toast.error('Failed to delete user. Please try again later.');
+        // Handle network error or any other error that prevented the fetch
+        console.error('Error:', error);
+        toast.error('An error occurred while deleting the user.');
       }
     }
   };
+  
 
   // Filtered list based on search term
   const filteredUsers = users.filter((user) =>

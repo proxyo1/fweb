@@ -4,6 +4,7 @@ import { ObjectId } from "mongodb"
 import speakeasy from "speakeasy"
 import QRCode from "qrcode"
 
+
 const router = express.Router();
 
 router.get("/", async (req, res) =>{

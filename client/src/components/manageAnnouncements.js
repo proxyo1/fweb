@@ -54,9 +54,11 @@ const ManageAnnouncementsPage = () => {
         try {
           const response = await fetch(`http://localhost:5050/announcements/${id}`, {
             method: 'DELETE',
+            credentials: 'include',
           });
           if (!response.ok) {
-            throw new Error('Failed to delete announcement');
+            const errorMessage = await response.text();
+        throw new Error(`${errorMessage}`);
           }
           setAnnouncements(announcements.filter(announcement => announcement._id !== id));
           toast.success('Announcement deleted successfully');

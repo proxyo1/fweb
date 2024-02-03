@@ -1,6 +1,7 @@
 import express from "express";
 import db from "../db/conn.mjs";
 import { ObjectId } from "mongodb";
+import { cookieJwtAuth } from '../middleware/auth.mjs';
 
 const router = express.Router();
 
@@ -29,7 +30,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/",cookieJwtAuth, async (req, res) => {
   try {
     let newDocument = {
       name: req.body.name,
@@ -55,9 +56,18 @@ router.post("/", async (req, res) => {
 });
 
 
+router.delete("/:id",cookieJwtAuth, async(req,res) =>{
+  const query = { _id: new ObjectId(req.params.id)};
+
+  const collection = db.collection("users");
+  let result = await collection.deleteOne(query);
+
+  res.send(result).status(200)
+})
+
 
 // router.patch
-router.patch("/:id", async (req, res) => {
+router.patch("/:id",cookieJwtAuth, async (req, res) => {
   try {
     const query = { _id: new ObjectId(req.params.id) };
     const updates = {

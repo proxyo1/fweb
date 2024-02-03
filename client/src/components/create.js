@@ -74,6 +74,7 @@ export default function Create() {
         headers: {
           "Content-Type": "application/json"
         },
+        credentials: 'include',
         body: JSON.stringify(form)
       });
 

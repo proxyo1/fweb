@@ -2,6 +2,9 @@ import express from "express";
 import db from "../db/conn.mjs";
 import { ObjectId } from "mongodb";
 import speakeasy from "speakeasy";
+import jwt from 'jsonwebtoken';
+import cookieParser from 'cookie-parser';
+
 
 const router = express.Router();
 
@@ -40,6 +43,20 @@ router.post("/2fa", async (req, res) => {
         });
 
         if (verified) {
+          console.log('JWT Secret:', process.env.JWT_SECRET);
+
+          // Generate JWT
+          const token = jwt.sign({ id: user._id, name: user.name }, process.env.JWT_SECRET, {
+            expiresIn: '1h'}
+      );
+
+      // Set token in HTTP-only cookie
+      res.cookie('token', token, {
+          httpOnly: true,
+          secure: true, 
+          sameSite: 'strict', // Helps with CSRF protection
+          maxAge: 3600000 // 1 hour
+      });
             res.status(200).json({ id: user._id, name: user.name, message: "2FA verification successful" });
         } else {
             res.status(401).json({ message: "Invalid 2FA token" });
