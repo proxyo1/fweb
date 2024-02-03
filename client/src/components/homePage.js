@@ -13,7 +13,6 @@ const HomePage = () => {
   
     return (
       <div className="bg-white text-gray-800 min-h-screen flex flex-col">
-      {/* Header */}
 
 
       {/* Main Content */}
@@ -28,9 +27,9 @@ const HomePage = () => {
             </div>
             {/* Image Slider */}
             <div>
-              <div >
+              
               <SliderComponent />
-              </div>
+              
             </div>
           </div>
         </div>

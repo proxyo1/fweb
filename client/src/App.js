@@ -14,6 +14,7 @@ import Navbar from "./components/navbar";
 import AdminPage from "./components/adminPage";
 import Login from "./components/loginPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import JoinUsPage from "./components/joinUsPage";
 
 
 
@@ -30,6 +31,7 @@ const App = () => {
       <Route path ="/create" element={<Create />}/>
       <Route path ="/edit/:id" element={<Edit />}/>
       <Route path="/users" element={<UserList />}/>
+      <Route path="/join" element={<JoinUsPage />}/>
       <Route path="/admin" element={<ProtectedRoute>
               <AdminPage />
             </ProtectedRoute>}/>

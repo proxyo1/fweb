@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 
@@ -25,33 +25,37 @@ export default function ResponsiveNavbar() {
         <nav>
           <ul className="flex space-x-4">
             <li><a href="#" className="nav-link text-lg text-white font-semibold hover:underline">Information</a></li>
-            <li><a href="#" className="nav-link text-lg text-white font-semibold hover:underline">Join Us</a></li>
-            {/* Conditionally render the "Login" or "Logout" link based on login state */}
-            
-            <li>
-              <NavLink to="/create" className="nav-link text-lg text-white font-semibold hover:underline">
-                Create User
-              </NavLink>
-            </li>
-            {/* Conditionally render the "Admin Page" link based on login state */}
-            {isLoggedIn && (
+            {/* Conditionally render the "Join Us" link based on login state */}
+            {!isLoggedIn && (
               <li>
-                <NavLink to="/admin" className="nav-link text-lg text-white font-semibold hover:underline">
-                  Admin Page
+                <NavLink to="/join" className="nav-link text-lg text-white font-semibold hover:underline">
+                  Join Us
                 </NavLink>
               </li>
             )}
-            {!isLoggedIn ? (
+
+            {/* Conditionally render the "Admin Page" and "Logout" link based on login state */}
+            {isLoggedIn && (
+              <>
+                <li>
+                  <NavLink to="/admin" className="nav-link text-lg text-white font-semibold hover:underline">
+                    Admin Page
+                  </NavLink>
+                </li>
+                <li>
+                  <a href="#" className="nav-link text-lg text-white font-semibold hover:underline" onClick={handleLogout}>
+                    Logout
+                  </a>
+                </li>
+              </>
+            )}
+
+            {/* Render "Login" link when not logged in */}
+            {!isLoggedIn && (
               <li>
                 <NavLink to="/login" className="nav-link text-lg text-white font-semibold hover:underline">
                   Login
                 </NavLink>
-              </li>
-            ) : (
-              <li>
-                <a href="#" className="nav-link text-lg text-white font-semibold hover:underline" onClick={handleLogout}>
-                  Logout
-                </a>
               </li>
             )}
           </ul>
