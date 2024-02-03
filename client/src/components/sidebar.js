@@ -17,7 +17,7 @@ const Sidebar = () => {
           </NavLink>
         </li>
         <li className="mb-3">
-          <NavLink to="/admin/announcements" className="text-gray-800 hover:text-gray-600" activeClassName="text-gray-600 font-semibold">
+          <NavLink to="/admin/manageannouncement" className="text-gray-800 hover:text-gray-600" activeClassName="text-gray-600 font-semibold">
             Announcements
           </NavLink>
         </li>

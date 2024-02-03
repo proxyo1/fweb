@@ -24,7 +24,9 @@ export default function ResponsiveNavbar() {
         </a>
         <nav>
           <ul className="flex space-x-4">
-            <li><a href="#" className="nav-link text-lg text-white font-semibold hover:underline">Information</a></li>
+          <NavLink to="/announcements" className="nav-link text-lg text-white font-semibold hover:underline">
+                  Announcements
+                </NavLink>
             {/* Conditionally render the "Join Us" link based on login state */}
             {!isLoggedIn && (
               <li>

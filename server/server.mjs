@@ -4,6 +4,7 @@ import records from "./routes/record.mjs";
 import users from "./routes/user.mjs";
 import applications from "./routes/applications.mjs";
 import login from "./routes/login.mjs";
+import announcements from "./routes/announcements.mjs";
 
 // Starting from Express 4.16.0, body-parser has been re-added under the methods express.json() and express.urlencoded()
 const app = express();
@@ -24,6 +25,7 @@ app.use("/record", records);
 app.use("/user", users);
 app.use("/application", applications);
 app.use("/login", login);
+app.use("/announcements", announcements);
 
 app.get("/", async (req, res) => {
     res.status(200).send("Hello World");

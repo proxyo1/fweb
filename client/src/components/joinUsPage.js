@@ -44,8 +44,8 @@ const JoinUsPage = () => {
         });
 
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || "An unknown error occurred");
+          const errorMessage = await response.text();
+          throw new Error(`${errorMessage}`);
         }
 
         toast.success("Application submitted successfully!");
@@ -56,9 +56,10 @@ const JoinUsPage = () => {
   };
 
   return (
-    <div className="bg-white text-gray-800 min-h-screen flex items-start justify-center pt-10 lg:pt-20">
+    <div className="bg-white text-gray-800 min-h-screen flex items-start justify-center pt-10 lg:pt-10">
       <div className="bg-gray-50 p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-3xl font-bold mb-6 text-center">Sign Up Now!</h2>
+      <h2 className="text-5x1  mb-1 text-center">Want to be a Falcon?</h2>
+        <h2 className="text-5xl font-bold mb-6 text-center">Sign Up Now!</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
