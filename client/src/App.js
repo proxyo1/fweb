@@ -18,6 +18,7 @@ import AnnouncementsPage from "./components/announcements";
 import ManageAnnouncementsPage from "./components/manageAnnouncements";
 import EditAnnouncementPage from "./components/EditAnnouncementPage";
 import ApplicationsPage from "./components/applications";
+import CreateAnnouncementPage from "./components/CreateAnnouncementPage";
 
 
 const App = () => {
@@ -38,6 +39,7 @@ const App = () => {
         <Route path="/admin" element={<ProtectedRoute><AdminPage /></ProtectedRoute>} />
         <Route path="/announcements" element={<ProtectedRoute><AnnouncementsPage /></ProtectedRoute>} />
         <Route path="/admin/manageannouncement" element={<ProtectedRoute><ManageAnnouncementsPage /></ProtectedRoute>} />
+        <Route path="/admin/createannouncement" element={<ProtectedRoute><CreateAnnouncementPage /></ProtectedRoute>} />
         <Route path="/admin/applications" element={<ProtectedRoute><ApplicationsPage /></ProtectedRoute>} />
       </Routes>
     </div>

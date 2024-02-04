@@ -9,6 +9,12 @@ import 'tailwindcss/tailwind.css';
 import SliderComponent from './sliderComponent';
 
 const HomePage = () => {
+  const images = [
+    './images/1.png',
+    './images/2.png',
+    './images/3.png'
+  ];
+  
 
   
     return (
@@ -17,18 +23,21 @@ const HomePage = () => {
 
       {/* Main Content */}
       <main className="flex-grow">
-        <div className="max-w-6xl mx-auto px-4 py-12">
+        <div className="max-w-7xl mx-auto px-0 py-12">
           <div className="grid grid-cols-2 gap-6 items-center">
             {/* Text Section */}
-            <div>
-              <p className="text-gray-500 text-sm uppercase">Track and Field</p>
-              <h1 className="font-bold text-6xl my-2">TP FALCONS</h1>
-              <p className="text-xl">RUN. JUMP. THROW.</p>
-            </div>
+                  <div className="text-center left-100">
+        <p className="text-gray-500 uppercase text-2xl lg:text-3xl">Track and Field</p>
+
+        {/* Start with a smaller size for "TP FALCONS" and increase it at larger breakpoints if necessary */}
+        <h1 className="font-bold text-7xl sm:text-8xl lg:text-8xl my-2 whitespace-nowrap">TP FALCONS</h1>
+
+        <p className="text-2xl lg:text-3xl">RUN. JUMP. THROW.</p>
+      </div>
             {/* Image Slider */}
-            <div>
+            <div >
               
-              <SliderComponent />
+            <SliderComponent images={images} />
               
             </div>
           </div>

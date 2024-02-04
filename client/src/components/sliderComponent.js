@@ -1,11 +1,29 @@
 // SliderComponent.js
 import React from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
+
+// Custom Next Arrow
+const NextArrow = ({ className, style, onClick }) => (
+  <div
+    className={className}
+    style={{ ...style, display: "block", background: "black", borderRadius: "50%" }}
+    onClick={onClick}
+  />
+);
+
+// Custom Prev Arrow
+const PrevArrow = ({ className, style, onClick }) => (
+  <div
+    className={className}
+    style={{ ...style, display: "block", background: "black", borderRadius: "50%" }}
+    onClick={onClick}
+  />
+);
 
 
-const SliderComponent = () => {
+const SliderComponent = ({ images }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -13,25 +31,28 @@ const SliderComponent = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,
-    pauseOnHover: true
-    
-    
+    autoplaySpeed: 2000,
+    cssEase: "linear",
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />
+  };
+
+  // Custom styles for images
+  const imageStyles = {
+    width: "100%", // Ensure the image takes the full width of the slide
+    height: "500px", // Specify a fixed height for the slide
+    objectFit: "cover" ,// Cover the container without distorting the aspect ratio
+    borderRadius: "20px" // Add rounded edges
   };
 
   return (
-    <div className="relative">
+    <div style={{ maxWidth: "600px", margin: "0 auto" }}>
       <Slider {...settings}>
-        <div>
-          <img src=".\images\1.png" alt="Group photo of TP Falcons athletics team in front of the Home of Athletics building" className="w-full h-full object-cover object-center" />
-        </div>
-        <div>
-          <img src=".\images\2.png" alt="Group photo of TP Falcons athletics team in front of the Home of Athletics building" className="w-full h-full object-cover object-center" />
-        </div>
-        <div>
-          <img src=".\images\3.png" alt="Group photo of TP Falcons athletics team in front of the Home of Athletics building" className="w-full h-full object-cover object-center" />
-        </div>
-        {/* Repeat the div for as many slides as you have */}
+        {images.map((img, index) => (
+          <div key={index}>
+            <img src={img} alt={`slide-${index}`} style={imageStyles} />
+          </div>
+        ))}
       </Slider>
     </div>
   );
