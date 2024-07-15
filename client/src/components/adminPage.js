@@ -75,7 +75,7 @@ const AdminPage = () => {
           {filteredUsers.map((user) => (
             <div key={user._id} className="flex items-center py-3 border-b border-gray-200">
               <img
-                className="w-16 h-16 rounded-full mr-4"
+                className="w-16 h-16 rounded-full mr-4 object-cover "
                 src={user.image || "https://placehold.co/100"} 
                 alt={`Avatar of ${user.name}`}
               />

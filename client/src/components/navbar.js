@@ -15,22 +15,22 @@ export default function ResponsiveNavbar() {
   };
 
   return (
-    <header className="bg-red-600 px-4 py-3 shadow-md">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <a href="#" className="flex items-center">
-          <NavLink to="/" className="flex items-center">
-            <img src="https://i.ibb.co/MN71qxX/TPlogo-Webreversed.png" alt="Temasek Polytechnic logo" className="mr-3" />
-          </NavLink>
-        </a>
+    <header className="bg-red-600 px-2 py-3 shadow-md"> {/* Reduced padding on the X-axis */}
+    <div className="max-w-9x1 max-h-20 mx-4 flex justify-between items-center">
+      <a href="#" className="flex items-center ml-[-8px]"> {/* Applied negative margin to move logo to the left */}
+        <NavLink to="/" className="flex items-center">
+          <img src="https://i.ibb.co/MN71qxX/TPlogo-Webreversed.png" alt="Temasek Polytechnic logo" className="mr-3"style={{ width: '130px', height: 'auto' }} />
+        </NavLink>
+      </a>
         <nav>
           <ul className="flex space-x-4">
-          <NavLink to="/announcements" className="nav-link text-lg text-white font-semibold hover:underline">
+          <NavLink to="/announcements" className="nav-link text-lg text-white font-semibold hover:underline mt-2">
                   Announcements
                 </NavLink>
             {/* Conditionally render the "Join Us" link based on login state */}
             {!isLoggedIn && (
               <li>
-                <NavLink to="/join" className="nav-link text-lg text-white font-semibold hover:underline">
+                <NavLink to="/join" className="nav-link text-lg text-white font-semibold hover:underline mt-2">
                   Join Us
                 </NavLink>
               </li>
@@ -40,12 +40,12 @@ export default function ResponsiveNavbar() {
             {isLoggedIn && (
               <>
                 <li>
-                  <NavLink to="/admin" className="nav-link text-lg text-white font-semibold hover:underline">
+                  <NavLink to="/admin" className="nav-link text-lg text-white font-semibold hover:underline mt-2">
                     Admin Page
                   </NavLink>
                 </li>
                 <li>
-                  <a href="#" className="nav-link text-lg text-white font-semibold hover:underline" onClick={handleLogout}>
+                  <a href="#" className="nav-link text-lg text-white font-semibold hover:underline mt-2" onClick={handleLogout}>
                     Logout
                   </a>
                 </li>
@@ -55,7 +55,7 @@ export default function ResponsiveNavbar() {
             {/* Render "Login" link when not logged in */}
             {!isLoggedIn && (
               <li>
-                <NavLink to="/login" className="nav-link text-lg text-white font-semibold hover:underline">
+                <NavLink to="/login" className="nav-link text-lg text-white font-semibold hover:underline mt-2">
                   Login
                 </NavLink>
               </li>

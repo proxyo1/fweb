@@ -15,11 +15,25 @@ const JoinUsPage = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    let formattedValue = value;
+    
+    // Specific logic for 'admin_no' to enforce the format
+    if (name === "admin_no") {
+      // Remove any character that is not a digit or letter, limit to 8 characters
+      formattedValue = formattedValue.replace(/[^0-9A-Za-z]/g, '').slice(0, 8);
+  
+      // Check if length is at the 8th character and it is a letter, capitalize it
+      if (formattedValue.length === 8) {
+        formattedValue = formattedValue.slice(0, 7) + formattedValue.charAt(7).toUpperCase();
+      }
+    }
+  
     setFormData(prevState => ({
       ...prevState,
-      [name]: value
+      [name]: formattedValue
     }));
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();

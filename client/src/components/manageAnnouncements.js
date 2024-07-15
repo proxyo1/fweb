@@ -25,27 +25,7 @@ const ManageAnnouncementsPage = () => {
         fetchAnnouncements();
     }, []);
     
-    const createAnnouncement = async (newAnnouncement) => {
-        try {
-          const response = await fetch('http://localhost:5050/announcements', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newAnnouncement),
-          });
-          if (!response.ok) {
-            throw new Error('Failed to create announcement');
-          }
-          const data = await response.json();
-          setAnnouncements([...announcements, data]);
-          toast.success('Announcement created successfully');
-        } catch (error) {
-          toast.error('Error creating announcement: ' + error.message);
-        }
-      };
-      
-      // Add this function to handle updating an existing announcement
+  
       
       
       // Add this function to handle deleting an announcement
@@ -69,12 +49,19 @@ const ManageAnnouncementsPage = () => {
     // Here you would add functions to handle creating, updating, and deleting announcements
 
     return (
-        <div className="flex">
+<div className="flex">
             <Sidebar />
             <div className="flex-1">
-
                 <div className="p-4">
-                <h2 className="text-4xl font-bold mb-10">Announcements</h2>
+                    <div className="flex justify-between items-center">
+                        <h2 className="text-4xl font-bold mb-10">Announcements</h2>
+                        <Link to={`/admin/createannouncement`}
+
+                            className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                        >
+                            Create Announcement
+                        </Link>
+                    </div>
                     {/* The main content of your management page goes here */}
                     <div>
                         {announcements.map((announcement) => (

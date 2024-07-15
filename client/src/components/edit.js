@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,10 +16,7 @@ export default function Edit() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`http://localhost:5050/user/${params.id}`);{
-        
-      }
-     
+      const response = await fetch(`http://localhost:5050/user/${params.id}`);
       if (!response.ok) {
         const message = `An error has occurred: ${response.statusText}`;
         window.alert(message);
@@ -34,7 +31,6 @@ export default function Edit() {
       }
 
       setForm(user);
-      // If the user has an image, set it as the preview
       if (user.image) {
         setImagePreview(user.image);
       }
@@ -42,23 +38,37 @@ export default function Edit() {
     fetchData();
   }, [params.id, navigate]);
 
-  function updateForm(value) {
+  const updateForm = useCallback((value) => {
     setForm((prev) => {
       return { ...prev, ...value };
     });
-  }
+  }, []);
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
+  const onDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const onDrop = (e) => {
+    e.preventDefault();
+    const files = e.dataTransfer.files;
+    if (files && files[0]) {
+      handleImageUploadEvent(files[0]);
+    }
+  };
+
+  const handleImageUploadEvent = (file) => {
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
         setImagePreview(reader.result);
-        // Update form state with the image as a base64 string
         updateForm({ image: event.target.result });
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleImageUpload = (e) => {
+    handleImageUploadEvent(e.target.files[0]);
   };
 
   async function onSubmit(e) {
@@ -100,7 +110,7 @@ export default function Edit() {
       }
 
       showSuccess("User successfully updated!");
-      navigate("/");
+      navigate("/admin");
     } catch (error) {
       showError(`${error.message}`);
     }
@@ -135,28 +145,32 @@ export default function Edit() {
       <div className="mx-auto w-full max-w-md">
         <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">Update Member</h2>
         <form onSubmit={onSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-          {/* Similar structure for image upload and preview */}
-          <div className="flex flex-col items-center mb-4">
-          <label htmlFor="upload-button" className="cursor-pointer">
-    {/* Display image preview or default icon */}
-    {imagePreview ? (
-      <img src={imagePreview} alt="Profile preview" className="h-24 w-24 rounded-full object-cover" />
-    ) : (
-      <div className="rounded-full border border-gray-300 w-24 h-24 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path d="M4 5h16a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2z" />
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v4m2-2H10" />
-        </svg>
-      </div>
-    )}
-    <input
-      id="upload-button"
-      type="file"
-      className="hidden"
-      accept="image/*"
-      onChange={handleImageUpload}
-    />
-  </label>
+          {/* Drag and Drop area */}
+          <div
+            className="flex flex-col items-center mb-4 p-6 border-2 border-dashed border-gray-300 rounded-md"
+            onDragOver={onDragOver}
+            onDrop={onDrop}
+          >
+            <label htmlFor="upload-button" className="cursor-pointer w-full text-center">
+              {imagePreview ? (
+                <img src={imagePreview} alt="Profile preview" className="h-24 w-24 rounded-full object-cover mx-auto" />
+              ) : (
+                <div className="flex flex-col items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path d="M4 5h16a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v4m2-2H10" />
+                  </svg>
+                  <p className="mt-2">Drag & drop your image here, or click to select files</p>
+                </div>
+              )}
+              <input
+                id="upload-button"
+                type="file"
+                className="hidden"
+                accept="image/*"
+                onChange={handleImageUpload}
+              />
+            </label>
           </div>
 {/* Name Input */}
 <div className="mb-6">
